@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<h3 class="text-center">Категория {{object.name}}</h3>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            <!-- информация о товаре -->
+            <div class="card-body px-4 ">
+
+                <p class="card-text fw-bolder">
+                    Описание:</p>
+
+                <p class="card-text p-2">
+                    {{ object.description }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

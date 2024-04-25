@@ -1,0 +1,51 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<h3 class="text-center">Посмотри как прерасен {{object.name}}</h3>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            <!-- Левая часть с изображением -->
+            <div class="col">
+                <div class="card shadow-sm bg-warning ">
+
+                    <img class="card-img-top" src="{{ object.image | mediapath }}" width="500" height="500"
+                         alt="{{object}}">
+                </div>
+            </div>
+            <!-- Правая часть с информацией о товаре -->
+            <div class="card-body px-4 ">
+                <p class="text-uppercase text-center fw-bolder">
+                    {{ object | title }}
+                </p>
+
+                <p class="card-text">
+                    Пользователь: {{ object.user }}
+                </p>
+
+                <p class="card-text fw-bolder">
+                    Описание:</p>
+
+                <p class="card-text p-2">
+                    {{ object.description }}
+                </p>
+
+                <p class="card-text fw-bolder">
+                    Категория:</p>
+                <p class="card-text p-2">
+                    {{ object.category }}
+                </p>
+
+                <p class="card-text fw-bolder">
+                    Стоимость любования: </p>
+                <p class="card-text text-danger fw-bolder p-2">
+                    {{ object.unit_price }} покемонеток
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

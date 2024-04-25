@@ -1,0 +1,55 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="col-12">
+    {% if perms.catalog.add_blog %}
+    <div class="col-12 mb-5">
+        <a type="button" class="btn btn-outline-primary" href="{% url 'catalog:create_blog' %}">Создать публикацию</a>
+    </div>
+    {% endif %}
+
+    <h1 class="text-center">Блог</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for object in object_list %}
+        <div class="col">
+            <div class="card shadow-sm">
+                {% if object.preview %}
+
+                <img class="card-img-top" src="{{ object.preview | mediapath }}" width="200" height="400"
+                     alt="{{object}}">
+
+                {% else %}
+                <img class="card-img-top" src="{{ 'no_photo.jpg' | mediapath }}" width="200" height="400" alt="no_photo">
+                {% endif %}
+
+                <div class="card-body bg-warning">
+                    <p class="text-uppercase fw-bolder">
+                        {{ object.blog_title }}
+                    </p>
+
+                    <p class="card-text">
+                        {{ object.body | truncatechars:100}}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+
+                            <a href="{% url 'catalog:view_blog' object.pk %}"
+                               class="btn btn-sm-2 btn-success">Читать</a>
+                            {% if perms.catalog.change_blog %}
+                            <a href="{% url 'catalog:update_blog' object.pk %}"
+                               class="btn btn-sm-2 btn-primary">Редактировать</a>
+                            {% endif %}
+                            {% if perms.catalog.delete_blog %}
+                            <a href="{% url 'catalog:delete_blog' object.pk %}"
+                               class="btn btn-sm-2 btn-danger">Удалить</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

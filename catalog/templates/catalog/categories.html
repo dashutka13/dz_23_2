@@ -1,0 +1,62 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+
+<div class="col-12">
+    {% if user.is_authenticated %}
+    {% if perms.catalog.add_category %}
+    <div class="col-12 mb-5">
+        <a type="button" class="btn btn-outline-primary" href="{% url 'catalog:create_category' %}">Добавить категорию</a>
+    </div>
+    {% endif %}
+    {% endif %}
+
+
+    <div class="col-12">
+        <h1 class="text-center">Категории покемонов</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="col">
+
+                        <div class="card-body bg-warning">
+                            <p class="text-uppercase fw-bolder">
+                                {{ object | title }}
+                            </p>
+
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+
+                                        {% if perms.catalog.view_category %}
+                                        <a href="{% url 'catalog:view_category' object.pk %}"
+                                           class="btn btn-sm-2 btn-outline-dark bg-success">
+                                            подробнее</a>
+                                        {% endif %}
+
+                                        {% if perms.catalog.change_category %}
+                                        <a href="{% url 'catalog:update_category' object.pk %}"
+                                           class="btn btn-sm-2 btn-outline-dark bg-primary">изменить</a>
+                                        {% endif %}
+
+                                        {% if perms.catalog.delete_category %}
+                                        <a href="{% url 'catalog:delete_category' object.pk %}"
+                                           class="btn btn-sm-2 btn-outline-dark bg-danger">удалить</a>
+                                        {% endif %}
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
